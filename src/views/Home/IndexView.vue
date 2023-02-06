@@ -6,4 +6,8 @@
 
 <script setup></script>
 
-<style scoped></style>
+<style scoped>
+p {
+  font-size: 14px;
+}
+</style>
