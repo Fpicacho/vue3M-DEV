@@ -1,6 +1,7 @@
 <template>
-  <!-- 全局路由出口 -->
-  <RouterView />
+  <div class="index">
+    <p>首页</p>
+  </div>
 </template>
 
 <script setup></script>

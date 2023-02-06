@@ -1,6 +1,7 @@
 <template>
-  <!-- 全局路由出口 -->
-  <RouterView />
+  <div class="footer">
+    <h1>Footer组件</h1>
+  </div>
 </template>
 
 <script setup></script>
