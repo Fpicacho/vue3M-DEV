@@ -7,6 +7,7 @@ import router from "./router";
 
 import "amfe-flexible";
 
+import "vant/lib/index.css";
 import "@/assets/css/main.less";
 
 const app = createApp(App);

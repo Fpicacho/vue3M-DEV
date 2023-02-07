@@ -1,12 +1,13 @@
 import axios from "axios";
 import qs from "qs";
+import { showLoadingToast, closeToast, showNotify } from "vant";
 
 // 当前请求队列长度
 let reqLength = 0;
 
 const fetch = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  timeout: import.meta.env.VITE_TIMEOUT,
+  timeout: import.meta.env.VITE_BASE_REQTIMEOUT,
 });
 
 fetch.defaults.headers.post["Content-Type"] =
@@ -37,7 +38,10 @@ fetch.interceptors.response.use(
   function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     if (error.message.includes("timeout")) {
-      console.log("当前服务状态拥挤，或网络环境不佳，请稍后重试。");
+      showNotify({
+        type: "warning",
+        message: "当前服务状态拥挤，或网络环境不佳，请稍后重试。",
+      });
     } else {
       console.log(`${error.response.status}:${error.response.statusText}`);
     }
@@ -50,15 +54,25 @@ fetch.interceptors.response.use(
 function requestHeapDetection(state) {
   if (state) {
     reqLength = reqLength + 1;
-    // SetloadingState(true);
+    SetloadingState();
     return;
   } else {
     reqLength = reqLength - 1;
-    // SetloadingState(true);
+    SetloadingState();
   }
   if (reqLength === 0) {
-    // SetloadingState(false);
+    // 卸载请求状态
+    closeToast();
   }
+}
+
+// 设置请求状态
+function SetloadingState() {
+  showLoadingToast({
+    message: "加载中...",
+    forbidClick: true,
+    duration: 0,
+  });
 }
 
 export default {
