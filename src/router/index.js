@@ -63,6 +63,11 @@ const router = createRouter({
           name: "demo-stores",
           component: () => import("@/views/Demo/StoresDemo.vue"),
         },
+        {
+          path: "/demo/api",
+          name: "demo-api",
+          component: () => import("@/views/Demo/ApiDemo.vue"),
+        },
       ],
     },
 

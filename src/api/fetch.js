@@ -17,7 +17,7 @@ fetch.interceptors.request.use(
   function (config) {
     // 携带token
     // 在发送请求之前做些什么
-    // requestHeapDetection(true); //t
+    requestHeapDetection(true); //t
     return config;
   },
   function (error) {
@@ -30,34 +30,18 @@ fetch.interceptors.request.use(
 fetch.interceptors.response.use(
   // 2xx 范围内的状态码都会触发该函数。
   function (response) {
-    if (response.data.success === "1") {
-      requestHeapDetection(false); //f
-      return response;
-    } else {
-      switch (response.data.success) {
-        case "0":
-          // 通常错误
-          message.error(response.data.msg);
-          break;
-        case "-1":
-          // 权限错误
-          message.error("权限不足，或书展已关闭，请重新登录！");
-          localStorage.clear();
-          utility.goTo("login");
-          break;
-      }
-    }
-    // requestHeapDetection(false); //f
+    // console.log(response);
+    requestHeapDetection(false);
     return response;
   },
   function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     if (error.message.includes("timeout")) {
-      message.error("当前服务状态拥挤，或网络环境不佳，请稍后重试。");
+      console.log("当前服务状态拥挤，或网络环境不佳，请稍后重试。");
     } else {
-      message.error(`${error.response.status}:${error.response.statusText}`);
+      console.log(`${error.response.status}:${error.response.statusText}`);
     }
-    // requestHeapDetection(false); //f
+    requestHeapDetection(false);
     return Promise.reject(error);
   }
 );
@@ -66,14 +50,14 @@ fetch.interceptors.response.use(
 function requestHeapDetection(state) {
   if (state) {
     reqLength = reqLength + 1;
-    SetloadingState(true);
+    // SetloadingState(true);
     return;
   } else {
     reqLength = reqLength - 1;
-    SetloadingState(true);
+    // SetloadingState(true);
   }
   if (reqLength === 0) {
-    SetloadingState(false);
+    // SetloadingState(false);
   }
 }
 
