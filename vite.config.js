@@ -6,7 +6,6 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 
 import postCssPxToRem from "postcss-pxtorem";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: {
